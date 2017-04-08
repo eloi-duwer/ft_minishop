@@ -1,25 +1,25 @@
-<?PHP
+<html>
+	<head>
+		<title>creation de compte</title>
+	</head>
 
-if ($_POST['login'] === "" || $_POST['passwd'] === "" || $_POST['submit'] !== 'OK')
-	echo "ERROR\n";
-else
-{
-	if (file_exists("../private") === false)
-		mkdir("../private");
-	if (file_exists("../private/passwd") === true)
-		$tab = unserialize(file_get_contents("../private/passwd"));
-	else
-		$tab = array();
-	foreach($tab as $id)
-	{
-	if ($id['login'] === $_POST['login'])
-			header('Location: ./create.html');
-	}
-	$user['login'] = $_POST['login'];
-	$user['passwd'] = hash("whirlpool", $_POST['passwd']);
-	$tab[count($tab)] = $user;
-	file_put_contents("../private/passwd", serialize($tab));
-	header('Location: ../index.php');
-}
-
-?>
+	<body>
+		<p style="text-align: center;">
+		Page de creation de nouveau compte</p>
+	<?PHP
+	if ($_GET['error'] === 'empty')
+		echo ('<p style="color: red; text-align: center">erreur: un des champs est vide </p>');
+	else if ($_GET['error'] === 'username_exist')
+		echo ('<p style="color: red; text-align: center">erreur: ce pseudo existe deja</p>');
+	?>
+		<form action="check_create.php" method="post">
+			<p style="text-align: center;">
+			Identifiant: <input type="text" name="login" />
+			<br />
+			Mot de passe: <input type="password" name="passwd" />
+			<br />
+			<input type ="submit" name="submit" value="OK"/>
+			</p>
+		</form>
+	</body>
+</html>
