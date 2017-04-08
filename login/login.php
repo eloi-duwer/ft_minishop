@@ -1,16 +1,22 @@
-<?PHP
+<html>
+	<head>
+		<title>connexion</title>
+	</head>
 
-session_start();
-include("./auth.php");
-if (auth($_POST['login'], $_POST['passwd']) === true)
-{
-	$_SESSION['loggued_on_user'] = $_POST['login'];
-		header('Location: ../index.php');
-}
-else
-{
-	$_SESSION['loggued_on_user'] = "";
-		header('Location: ./login.html?error=no_corr');
-}
-
+	<body>
+		<p style="text-align: center;">
+		Page de connexion au compte</p>
+<?PHP if ($_GET['error'] === 'no_corr')
+	echo ('<p style="color: red; text-align: center">Erreur: mauvais Identifiant/Mot de passe</p>');
 ?>
+		<form action="./check_log.php" method="post">
+			<p style="text-align: center;">
+			Identifiant: <input type="text" name="login" />
+			<br />
+			Mot de passe: <input type="password" name="passwd" />
+			<br />
+			<input type ="submit" name="submit" value="OK"/>
+			</p>
+		</form>
+	</body>
+</html>
